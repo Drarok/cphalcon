@@ -14,6 +14,10 @@
 #  Authors: Andres Gutierrez <andres@phalconphp.com>
 #            Eduar Carvajal <eduar@phalconphp.com>
 
+PHPIZE_BIN="/usr/local/Cellar/php/5.6/bin/phpize"
+PHPCONFIG_BIN="/usr/local/Cellar/php/5.6/bin/php-config"
+PHP_PREFIX="/usr/local/Cellar/php/5.6"
+
 # Check best compilation flags for GCC
 export CC="gcc"
 export CFLAGS="-march=native -mtune=native -O2 -fno-delete-null-pointer-checks -finline-functions -fomit-frame-pointer -fno-builtin-memcmp"
@@ -56,8 +60,14 @@ cd $DIR
 #Clean current compilation
 if [ -f Makefile ]; then
 	make clean
-	phpize --clean
+	$PHPIZE_BIN --clean
 fi
 
 #Perform the compilation
-phpize && ./configure --enable-phalcon && make && make install && echo -e "\nThanks for compiling Phalcon!\nBuild succeed: Please restart your web server to complete the installation"
+$PHPIZE_BIN && \
+	aclocal && \
+	$LIBTOOLIZE_BIN --force && \
+	autoheader && autoconf && \
+	./configure "--with-php-config=$PHPCONFIG_BIN" "--prefix=$PHP_PREFIX" --enable-phalcon && \
+	make && make install && \
+	echo -e "\nThanks for compiling Phalcon!\nBuild succeed: Please restart your web server to complete the installation"

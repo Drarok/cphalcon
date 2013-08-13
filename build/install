@@ -14,9 +14,9 @@
 #  Authors: Andres Gutierrez <andres@phalconphp.com>
 #            Eduar Carvajal <eduar@phalconphp.com>
 
-PHPIZE_BIN="/usr/local/Cellar/php/5.6/bin/phpize"
-PHPCONFIG_BIN="/usr/local/Cellar/php/5.6/bin/php-config"
-PHP_PREFIX="/usr/local/Cellar/php/5.6"
+PHPIZE_BIN="phpize"
+PHPCONFIG_BIN="php-config"
+PHP_PREFIX="$($PHPCONFIG_BIN --prefix)"
 
 # Check best compilation flags for GCC
 export CC="gcc"

@@ -95,7 +95,9 @@ $PHPIZE_BIN && \
 if [ "$LIBTOOLIZE_BIN" == "glibtoolize" ]
 then
 	echo 'Fixing up libtool output...'
-	sed -e 's/^ECHO=/echo=/' -i -f libtool
+
+	# Use OS X standard sed, since we don't if the user will have GNU sed.
+	/usr/bin/sed -e 's/^ECHO=/echo=/' -i '' libtool
 fi
 
 make && make install && \

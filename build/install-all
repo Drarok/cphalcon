@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for d in /usr/local/Cellar/php/*;
+do
+	PHP_ROOT="$d/bin";
+	PHPIZE_BIN="$PHP_ROOT/phpize";
+	PHPCONFIG_BIN="$PHP_ROOT/php-config";
+
+	export PHPIZE_BIN PHPCONFIG_BIN;
+	./install;
+done

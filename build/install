@@ -14,9 +14,30 @@
 #  Authors: Andres Gutierrez <andres@phalconphp.com>
 #            Eduar Carvajal <eduar@phalconphp.com>
 
-PHPIZE_BIN="phpize"
-PHPCONFIG_BIN="php-config"
+if [[ -z "$PHPIZE_BIN" ]]
+then
+	PHPIZE_BIN="phpize"
+fi
+
+if [[ -z "$PHPCONFIG_BIN" ]]
+then
+	PHPCONFIG_BIN="php-config"
+fi
+
 PHP_PREFIX="$($PHPCONFIG_BIN --prefix)"
+
+echo "PHPIZE_BIN: $PHPIZE_BIN"
+echo "PHPCONFIG_BIN: $PHPCONFIG_BIN"
+echo "PHP_PREFIX: $PHP_PREFIX"
+
+echo -n 'Are the above paths correct? [y/n] '
+read RESPONSE
+
+if [[ "$RESPONSE" != 'y' ]]
+then
+	echo "Exiting"
+	exit
+fi
 
 # Check best compilation flags for GCC
 export CC="gcc"

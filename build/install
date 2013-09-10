@@ -68,6 +68,14 @@ $PHPIZE_BIN && \
 	aclocal && \
 	$LIBTOOLIZE_BIN --force && \
 	autoheader && autoconf && \
-	./configure "--with-php-config=$PHPCONFIG_BIN" "--prefix=$PHP_PREFIX" --enable-phalcon && \
-	make && make install && \
+	./configure "--with-php-config=$PHPCONFIG_BIN" "--prefix=$PHP_PREFIX" --enable-phalcon
+
+# The output of libtool is, for some reason, wrong. Possibly only on Darwin?
+if [ "$LIBTOOLIZE_BIN" == "glibtoolize" ]
+then
+	echo 'Fixing up libtool output...'
+	sed -e 's/^ECHO=/echo=/' -i -f libtool
+fi
+
+make && make install && \
 	echo -e "\nThanks for compiling Phalcon!\nBuild succeed: Please restart your web server to complete the installation"
